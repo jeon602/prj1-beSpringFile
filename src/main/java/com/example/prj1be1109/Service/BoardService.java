@@ -22,6 +22,7 @@ public class BoardService {
             return false;
         }
 
+
         if (board.getArtist() == null || board.getArtist().isBlank()) {
             return false;
         }

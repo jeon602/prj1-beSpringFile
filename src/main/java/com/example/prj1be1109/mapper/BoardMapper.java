@@ -22,6 +22,7 @@ public interface BoardMapper {
         """)
     List<Board> selectAll();
 
+
     @Select("""
         SELECT id,Artist, Title, ReleaseDate,Production,Cost FROM mmlist
         WHERE Artist = #{Artist}

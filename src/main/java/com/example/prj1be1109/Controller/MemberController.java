@@ -23,4 +23,12 @@ public class MemberController {
         }else {return ResponseEntity.ok().build();
         }
     }
+    @GetMapping(value = "check", params = "email")
+    public ResponseEntity checkEmail(String email) {
+        if (service.getEmail(email) == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok().build();
+        }
+    }
 }

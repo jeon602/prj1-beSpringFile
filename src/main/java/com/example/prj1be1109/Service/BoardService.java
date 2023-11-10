@@ -49,6 +49,7 @@ public class BoardService {
         return mapper.deleteById(id) == 1;
     }
 
-    public void update(Board board) {mapper.update(board);
+    public boolean update(Board board) {mapper.update(board);
+        return false;
     }
 }

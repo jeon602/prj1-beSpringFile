@@ -10,35 +10,37 @@ import java.util.List;
 public interface BoardMapper {
 
     @Insert("""
-        INSERT INTO board (title, content, writer)
-        VALUES (#{title}, #{content}, #{writer})
+        INSERT INTO mmlist (Artist, Title, ReleaseDate, Production, Cost)
+        VALUES (#{Artist}, #{Title}, #{ReleaseDate},#{Production},#{Cost})
         """)
     int insert(Board board);
 
     @Select("""
-        SELECT id, title, writer, inserted
-        FROM board
-        ORDER BY id DESC
+        SELECT id,Artist, Title, ReleaseDate,Production,Cost
+        FROM mmlist
+        ORDER BY Artist DESC
         """)
     List<Board> selectAll();
 
     @Select("""
-        SELECT id, title, content, writer, inserted
-        FROM board
-        WHERE id = #{id}
+        SELECT id,Artist, Title, ReleaseDate,Production,Cost FROM mmlist
+        WHERE Artist = #{Artist}
         """)
-    Board selectById(Integer id);
+    Board selectId (Integer id);
 
     @Delete("""
-        DELETE FROM board
-        WHERE id = #{id}
+        DELETE FROM mmlist
+        WHERE id= #{id}
         """)
     int deleteById(Integer id);
     @Update("""
-        UPDATE board
-        SET title = #{title},
-            content = #{content},
-            writer = #{writer}
+        UPDATE mmlist
+        
+        SET Artist = #{Artist},
+            Title = #{Title},
+            ReleaseDate = #{ReleaseDate},
+            Production= #{Production},
+            Cost = #{Cost}
         WHERE id = #{id}
         """)
     int update(Board board);

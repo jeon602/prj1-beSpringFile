@@ -22,7 +22,7 @@ public class BoardService {
             return false;
         }
 
-        if (board.getContent() == null || board.getContent().isBlank()) {
+        if (board.getArtist() == null || board.getArtist().isBlank()) {
             return false;
         }
 
@@ -30,7 +30,14 @@ public class BoardService {
             return false;
         }
 
-        if (board.getWriter() == null || board.getWriter().isBlank()) {
+        if (board.getReleasedate() == null || board.getReleasedate().isBlank()) {
+            return false;
+        }
+
+        if (board.getProduction() == null || board.getProduction().isBlank()) {
+            return false;
+        }
+        if (board.getCost() == null || board.getCost().isblack()) {
             return false;
         }
 

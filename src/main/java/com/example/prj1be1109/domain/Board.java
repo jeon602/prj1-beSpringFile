@@ -7,9 +7,13 @@ import java.time.LocalDateTime;
 
 @Data
 public class Board {
-    private Integer id;
-    private String title;
-    private String content;
-    private String writer;
+    private String id;
+    private String Artist;
+    private String Title;
+    private String Releasedate;
+    private String Production;
+    private Integer Cost;
     private LocalDateTime inserted;
+
+
 }

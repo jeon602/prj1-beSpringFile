@@ -4,7 +4,6 @@ package com.example.prj1be1109.Service;
 import com.example.prj1be1109.domain.Member;
 import com.example.prj1be1109.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +14,9 @@ public class MemberService {
 
     private final MemberMapper mapper;
 
-    public void add(Member member) {
+    public boolean add(Member member) {
         mapper.insert(member);
+        return false;
     }
 
     public String getId(String id) {
@@ -46,5 +46,10 @@ public class MemberService {
     }
     public List<Member> list() {
         return mapper.selectAll();
+    }
+
+    public Member getMember(String id) {
+
+        return mapper.selectById(id);
     }
 }

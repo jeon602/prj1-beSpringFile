@@ -32,4 +32,10 @@ public interface MemberMapper {
         from member ORDER BY  inserted DESC
         """)
     List<Member> selectAll();
+
+    @Select("""
+SELECT *
+ FROM member
+ WHERE id = #{id}""")
+    Member selectById(String id);
 }

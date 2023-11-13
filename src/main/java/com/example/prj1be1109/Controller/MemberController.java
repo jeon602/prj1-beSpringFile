@@ -45,6 +45,7 @@ public class MemberController {
         }
     }
 
+
     @GetMapping("list")
     public List<Member> list() {
         return service.list();

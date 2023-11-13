@@ -53,6 +53,9 @@ public class MemberController {
 
     @GetMapping
     public ResponseEntity<Member> view(String id) {
+        // todo : 로그인 유무 : 안했으면 401
+        // todo : 회원 본인의 계정 정보인가? 아니면 403
+
         Member member = service.getMember(id);
 
         return ResponseEntity.ok(member);
@@ -68,5 +71,16 @@ public class MemberController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.internalServerError().build();
+    }
+    @PutMapping("edit")
+    public ResponseEntity edit(@RequestBody Member member){
+//       //로그인했는지? : 회원 본인의 계정 정보인가?
+
+        if (service.update(member)){
+            return  ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.internalServerError().build();
+        }
+
     }
 }

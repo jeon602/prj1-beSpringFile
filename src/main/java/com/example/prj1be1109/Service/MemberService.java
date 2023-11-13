@@ -22,6 +22,7 @@ public class MemberService {
     public String getId(String id) {
         return mapper.selectId(id);
     }
+
     public String getEmail(String email) {
         return mapper.selectEmail(email);
     }
@@ -39,11 +40,9 @@ public class MemberService {
             return false;
         }
 
-        if (member.getId().isBlank()) {
-            return false;
-        }
-        return true;
+        return !member.getId().isBlank();
     }
+
     public List<Member> list() {
         return mapper.selectAll();
     }
@@ -55,5 +54,10 @@ public class MemberService {
 
     public boolean deleteMember(String id) {
         return mapper.deleteById(id) == 1;
+    }
+
+    public boolean update(Member member) {
+
+        return mapper.update(member) == 1;
     }
 }

@@ -81,6 +81,14 @@ public class MemberController {
         }else{
             return ResponseEntity.internalServerError().build();
         }
+        @GetMapping(value = "check", params = "nickName")
+        public ResponseEntity checkNickName(String nickName) {
+            if (service.getNickNa me(nickName) == null) {
+                return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.ok().build();
+            }
+        }
 
     }
 }

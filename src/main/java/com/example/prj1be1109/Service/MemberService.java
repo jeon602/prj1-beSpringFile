@@ -3,13 +3,10 @@ package com.example.prj1be1109.Service;
 import com.example.prj1be1109.domain.Member;
 import com.example.prj1be1109.mapper.BoardMapper;
 import com.example.prj1be1109.mapper.MemberMapper;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
-
 
 import java.util.List;
 

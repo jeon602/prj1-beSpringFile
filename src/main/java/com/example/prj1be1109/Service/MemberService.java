@@ -60,7 +60,7 @@ public class MemberService {
 
     public boolean deleteMember(String id) {
         //이 멤버가 작성한 게시물 삭제
-        boardMapper.deleteByWrite(id);
+        boardMapper.deleteByWriter(id);
         // 이 멤버 삭제
 
         return mapper.deleteById(id) == 1;

@@ -59,4 +59,6 @@ public interface BoardMapper {
         """)
 
     int deleteByWriter(String writer);
+
+   
 }

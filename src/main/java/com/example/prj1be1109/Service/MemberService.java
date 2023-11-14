@@ -1,5 +1,6 @@
 package com.example.prj1be1109.Service;
 
+import com.example.prj1be1109.domain.Auth;
 import com.example.prj1be1109.domain.Member;
 import com.example.prj1be1109.mapper.BoardMapper;
 import com.example.prj1be1109.mapper.MemberMapper;
@@ -86,16 +87,28 @@ public class MemberService {
 
         if (dbMember != null) {
             if (dbMember.getPassword().equals(member.getPassword())) {
+
+                List<Auth> auth = mapper.selectAuthById(member.getId());
+                dbMember.setAuth(auth);
+
                 dbMember.setPassword("");
                 request.setAttribute("login", dbMember, RequestAttributes.SCOPE_SESSION);
                 return true;
             }
         }
-
         return false;
     }
-
     public boolean hasAccess(String id, Member login) {
+        if (isAdmin(login)){
+            return true;
+        }
         return login.getId().equals(id);
+    }
+    public boolean isAdmin(Member login){
+        if (login.getAuth() != null){
+            return login.getAuth().stream().map(e->e.getName())
+                    .anyMatch(n-> n.equals("admin"));
+        }
+        return false;
     }
 }

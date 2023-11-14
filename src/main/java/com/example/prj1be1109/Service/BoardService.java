@@ -12,8 +12,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final MemberService memberService;
     private final BoardMapper mapper;
+    private final MemberService memberService;
 
     public boolean save(Board board, Member login) {
         board.setWriter(login.getId());

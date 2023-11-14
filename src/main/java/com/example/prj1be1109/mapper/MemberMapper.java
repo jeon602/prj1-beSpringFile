@@ -14,8 +14,7 @@ public interface MemberMapper {
     int insert(Member member);
 
     @Select("""
-        SELECT id FROM member
-        WHERE id = #{id}
+     
         """)
     String selectId(String id);
 

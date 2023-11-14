@@ -1,6 +1,7 @@
 package com.example.prj1be1109.Service;
 
 import com.example.prj1be1109.domain.Member;
+import com.example.prj1be1109.mapper.BoardMapper;
 import com.example.prj1be1109.mapper.MemberMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberMapper mapper;
+    private final BoardMapper boardMapper;
 
     public boolean add(Member member) {
         return mapper.insert(member) == 1;
@@ -60,6 +62,10 @@ public class MemberService {
 
 
     public boolean deleteMember(String id) {
+        //이 멤버가 작성한 게시물 삭제
+        boardMapper.deleteByWrite(id);
+        // 이 멤버 삭제
+
         return mapper.deleteById(id) == 1;
     }
 
@@ -91,10 +97,8 @@ public class MemberService {
 
         return false;
     }
-    @PostMapping("logout")
-    public void logout(HttpSession session){
-        if(session != null){
-            session.invalidate();
-        }
+
+    public boolean hasAccess(String id, Member login) {
+        return login.getId().equals(id);
     }
 }

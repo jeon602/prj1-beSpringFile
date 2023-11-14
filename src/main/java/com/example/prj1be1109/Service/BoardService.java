@@ -15,6 +15,7 @@ public class BoardService {
     private final BoardMapper mapper;
 
     public boolean save(Board board, Member login) {
+        board.setWriter(login.getId());
         return mapper.insert(board) == 1;
     }
 
@@ -31,9 +32,7 @@ public class BoardService {
             return false;
         }
 
-        if (board.getWriter() == null || board.getWriter().isBlank()) {
-            return false;
-        }
+
 
         return true;
     }
@@ -50,7 +49,12 @@ public class BoardService {
         return mapper.deleteById(id) == 1;
     }
 
-    public boolean update(Board board) {mapper.update(board);
-        return false;
+    public boolean update(Board board) {
+        return mapper.update(board) ==1;
     }
+    public boolean hasAccess(Integer id, Member login)
+    {Board board = mapper.selectById(id);
+        return board.getWriter().equals(login.getId());
+    }
+
 }

@@ -1,9 +1,9 @@
-package com.example.prj1be1109.Service;
+package com.example.prj1be20231109.service;
 
-import com.example.prj1be1109.domain.Auth;
-import com.example.prj1be1109.domain.Member;
-import com.example.prj1be1109.mapper.BoardMapper;
-import com.example.prj1be1109.mapper.MemberMapper;
+import com.example.prj1be20231109.domain.Auth;
+import com.example.prj1be20231109.domain.Member;
+import com.example.prj1be20231109.mapper.BoardMapper;
+import com.example.prj1be20231109.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
@@ -60,9 +60,10 @@ public class MemberService {
 
 
     public boolean deleteMember(String id) {
-        //이 멤버가 작성한 게시물 삭제
+        // 1. 이 멤버가 작성한 게시물 삭제
         boardMapper.deleteByWriter(id);
-        // 이 멤버 삭제
+
+        // 2. 이 멤버 삭제
 
         return mapper.deleteById(id) == 1;
     }
@@ -85,6 +86,7 @@ public class MemberService {
     public boolean login(Member member, WebRequest request) {
         Member dbMember = mapper.selectById(member.getId());
 
+
         if (dbMember != null) {
             if (dbMember.getPassword().equals(member.getPassword())) {
 
@@ -96,19 +98,27 @@ public class MemberService {
                 return true;
             }
         }
+
         return false;
     }
+
+
     public boolean hasAccess(String id, Member login) {
-        if (isAdmin(login)){
+        if (isAdmin(login)) {
             return true;
         }
+
         return login.getId().equals(id);
     }
-    public boolean isAdmin(Member login){
-        if (login.getAuth() != null){
-            return login.getAuth().stream().map(e->e.getName())
-                    .anyMatch(n-> n.equals("admin"));
+
+    public boolean isAdmin(Member login) {
+        if (login.getAuth() != null) {
+            return login.getAuth()
+                    .stream()
+                    .map(e -> e.getName())
+                    .anyMatch(n -> n.equals("admin"));
         }
+
         return false;
     }
 }

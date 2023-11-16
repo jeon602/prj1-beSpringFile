@@ -1,8 +1,8 @@
-package com.example.prj1be1109.Service;
+package com.example.prj1be20231109.service;
 
-import com.example.prj1be1109.domain.Comment;
-import com.example.prj1be1109.domain.Member;
-import com.example.prj1be1109.mapper.CommentMapper;
+import com.example.prj1be20231109.domain.Comment;
+import com.example.prj1be20231109.domain.Member;
+import com.example.prj1be20231109.mapper.CommentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

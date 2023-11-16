@@ -1,8 +1,8 @@
-package com.example.prj1be1109.Controller;
+package com.example.prj1be20231109.controller;
 
-import com.example.prj1be1109.domain.Comment;
-import com.example.prj1be1109.domain.Member;
-import com.example.prj1be1109.Service.CommentService;
+import com.example.prj1be20231109.domain.Comment;
+import com.example.prj1be20231109.domain.Member;
+import com.example.prj1be20231109.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +69,7 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        if (service.hasAccess(comment.getId, login)) {
+        if (service.hasAccess(comment.getId(), login)) {
             if (!service.updateValidate(comment)) {
                 return ResponseEntity.badRequest().build();
             }

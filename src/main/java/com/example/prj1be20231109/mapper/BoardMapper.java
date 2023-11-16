@@ -1,6 +1,6 @@
-package com.example.prj1be1109.mapper;
+package com.example.prj1be20231109.mapper;
 
-import com.example.prj1be1109.domain.Board;
+import com.example.prj1be20231109.domain.Board;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 

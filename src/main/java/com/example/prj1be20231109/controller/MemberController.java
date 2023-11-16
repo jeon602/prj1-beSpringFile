@@ -94,7 +94,6 @@ public class MemberController {
             session.invalidate();
             return ResponseEntity.ok().build();
         }
-
         return ResponseEntity.internalServerError().build();
 
     }

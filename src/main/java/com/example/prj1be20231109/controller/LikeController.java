@@ -15,12 +15,12 @@ public class LikeController {
     private final LikeService service;
 
     @PostMapping
-    public ResponseEntity<Object> like(@RequestBody Like like, @SessionAttribute(value = "login", required = false)Member login){
+    public ResponseEntity<Object> like(@RequestBody Like like,
+                                       @SessionAttribute(value = "login", required = false) Member login ){
         if (login ==null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-        service.update(like);
+        service.update(like, login);
         return null;
     }
 }

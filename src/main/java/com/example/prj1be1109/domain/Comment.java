@@ -6,10 +6,10 @@ import java.time.LocalDate;
 
 @Data
 public class Comment {
-    private Integer id;
+    public Integer getId;
+    private String id;
     private Integer boardId;
     private String memeberId;
     private String  comment;
     private LocalDate inserted;
-
 }

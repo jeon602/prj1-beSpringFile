@@ -59,16 +59,17 @@ public class CommentController {
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
     }
 
-    @PostMapping("edit")
+    @PutMapping("edit")
     public ResponseEntity update(@RequestBody Comment comment,
                                  @SessionAttribute(value = "login", required = false) Member login) {
         if (login == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        if (service.hasAccess(comment.getId(), login)) {
+        if (service.hasAccess(comment.getId, login)) {
             if (!service.updateValidate(comment)) {
                 return ResponseEntity.badRequest().build();
             }

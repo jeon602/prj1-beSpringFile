@@ -14,13 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/comment")
 public class CommentController {
-
     private final CommentService service;
-
     @PostMapping("add")
     public ResponseEntity add(@RequestBody Comment comment,
                               @SessionAttribute(value = "login", required = false) Member login) {
-
         if (login == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -31,18 +28,14 @@ public class CommentController {
             } else {
                 return ResponseEntity.internalServerError().build();
             }
-
         } else {
             return ResponseEntity.badRequest().build();
         }
-
     }
-
     @GetMapping("list")
     public List<Comment> list(@RequestParam("id") Integer boardId) {
         return service.list(boardId);
     }
-
     @DeleteMapping("{id}")
     public ResponseEntity remove(@PathVariable Integer id,
                                  @SessionAttribute(value = "login", required = false) Member login) {
@@ -59,21 +52,17 @@ public class CommentController {
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-
     }
-
     @PutMapping("edit")
     public ResponseEntity update(@RequestBody Comment comment,
                                  @SessionAttribute(value = "login", required = false) Member login) {
         if (login == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
         if (service.hasAccess(comment.getId(), login)) {
             if (!service.updateValidate(comment)) {
                 return ResponseEntity.badRequest().build();
             }
-
             if (service.update(comment)) {
                 return ResponseEntity.ok().build();
             } else {
@@ -83,7 +72,5 @@ public class CommentController {
 
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-
-
     }
 }

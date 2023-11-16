@@ -21,6 +21,8 @@ public interface BoardMapper {
                m.nickName, 
                b.inserted
         FROM board b JOIN member m ON b.writer = m.id
+                      LEFT JOIN comment c on b.id = c.boardId
+                      GROUP BY b.id
         ORDER BY b.id DESC
         """)
     List<Board> selectAll();

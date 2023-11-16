@@ -11,6 +11,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
+import java.util.PriorityQueue;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class MemberService {
     private final BoardMapper boardMapper;
     private final CommentMapper commentMapper;
     private final BoardService boardService;
+//    private final BoardList boardIdList;
 
     public boolean add(Member member) {
         return mapper.insert(member) == 1;
@@ -69,7 +71,7 @@ public class MemberService {
         // 1. 이 멤버가 작성한 게시물 삭제
         boardMapper.deleteByWriter(id);
         // 이멤버가 작성한 게시물 번호들 조회
-        List<Integer> boardMapper.selectIdListByMemberId(id);
+        List<Integer> boardIdList= boardMapper.selectIdListByMemberId(id);
         boardIdList.forEach((boardId)-> boardService.remove(boardId));
         // 2. 이 멤버 삭제
 

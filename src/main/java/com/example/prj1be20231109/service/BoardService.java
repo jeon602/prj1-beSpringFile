@@ -14,6 +14,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardMapper mapper;
+    private final MemberService memberService;
     private final CommentMapper commentMapper;
 
 
@@ -61,7 +62,6 @@ public class BoardService {
             return true;
         }
         Board board = mapper.selectById(id);
-
         return board.getWriter().equals(login.getId());
     }
 

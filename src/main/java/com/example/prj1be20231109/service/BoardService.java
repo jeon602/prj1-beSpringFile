@@ -14,12 +14,12 @@ import java.util.List;
 public class BoardService {
 
     private final BoardMapper mapper;
-    private final MemberService memberService;
     private final CommentMapper commentMapper;
 
 
     public boolean save(Board board, Member login) {
         board.setWriter(login.getId());
+
         return mapper.insert(board) == 1;
     }
 
@@ -31,8 +31,11 @@ public class BoardService {
         if (board.getContent() == null || board.getContent().isBlank()) {
             return false;
         }
+        if (board.getTitle() == null || board.getTitle().isBlank()) {
+            return false;
+        }
 
-        return board.getTitle() != null && !board.getTitle().isBlank();
+        return true;
     }
 
     public List<Board> list() {
@@ -44,7 +47,7 @@ public class BoardService {
     }
 
     public boolean remove(Integer id) {
-        //1. 게시뭏ㄹ에 달린 댓글들 지우기
+        // 게시물에 달린 댓글들 지우기
         commentMapper.deleteByBoardId(id);
 
         return mapper.deleteById(id) == 1;
@@ -62,6 +65,7 @@ public class BoardService {
             return true;
         }
         Board board = mapper.selectById(id);
+
         return board.getWriter().equals(login.getId());
     }
 

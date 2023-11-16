@@ -77,10 +77,6 @@ public class MemberService {
 
         return mapper.deleteById(id) == 1;
     }
-
-    private void selectIdListByMemberId(String id) {
-    }
-
     public boolean update(Member member) {
 //        Member oldMember = mapper.selectById(member.getId());
 //

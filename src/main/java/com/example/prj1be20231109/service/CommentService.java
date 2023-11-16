@@ -17,7 +17,7 @@ public class CommentService {
 
     public boolean add(Comment comment, Member login) {
         comment.setMemeberId(login.getId());
-        return mapper.insert(comment) == 0;
+        return mapper.insert(comment) == 1;
     }
 
     public boolean validate(Comment comment) {

@@ -3,6 +3,7 @@ package com.example.prj1be20231109.mapper;
 import com.example.prj1be20231109.domain.Auth;
 import com.example.prj1be20231109.domain.Member;
 import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 
 @Mapper
@@ -15,7 +16,8 @@ public interface MemberMapper {
     int insert(Member member);
 
     @Select("""
-     
+        SELECT id FROM member
+        WHERE id = #{id}
         """)
     String selectId(String id);
 
@@ -65,8 +67,9 @@ public interface MemberMapper {
         WHERE nickName = #{nickName}
         """)
     String selectNickName(String nickName);
-@Select("""
-        SELECT *FROM auth
+
+    @Select("""
+        SELECT * FROM auth
         WHERE memberId = #{id}
         """)
     List<Auth> selectAuthById(String id);

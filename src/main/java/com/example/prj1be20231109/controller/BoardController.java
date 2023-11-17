@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,8 +38,9 @@ public class BoardController {
         }
     }
 // /api/board/list?p=6
-    @GetMapping("list")
-    public List<Board> list(@RequestParam(value = "p" ,defaultValue = "1") Integer page) {
+    @GetMapping("list") //리스트가 하던일은 이제 페이지 관련한 정보도 넘겨줘야 한다! --->map으로 묶어서 전달해주기
+    public Map<String, Objects> list(@RequestParam(value = "p" ,defaultValue = "1") Integer page) {
+//        보드리스트로 만들었던 게시물 리스트 key value. pageinfo ,..., key 도 만들어서 pageinfo로 만들어서 서비스에서 전달할 것.
         return service.list(page);
     }
 

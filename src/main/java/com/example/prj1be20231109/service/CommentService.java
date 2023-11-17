@@ -16,8 +16,8 @@ public class CommentService {
     private final CommentMapper mapper;
 
     public boolean add(Comment comment, Member login) {
-        comment.setMemeberId(login.getId());
-        return mapper.insert(comment) == 0;
+        comment.setMemberId(login.getId());
+        return mapper.insert(comment) == 1;
     }
 
     public boolean validate(Comment comment) {
@@ -48,7 +48,7 @@ public class CommentService {
     public boolean hasAccess(Integer id, Member login) {
         Comment comment = mapper.selectById(id);
 
-        return comment.getMemeberId().equals(login.getId());
+        return comment.getMemberId().equals(login.getId());
     }
 
     public boolean update(Comment comment) {

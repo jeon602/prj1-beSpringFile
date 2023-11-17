@@ -20,10 +20,17 @@ public interface LikeMapper {
             values (#{boardId}, #{memberId})
             """)
     int insert(Like like);
+
     @Select("""
-        SELECT COUNT(id) FROM boardlike
-        WHERE boardId = #{boardId}
-        """)
+            SELECT COUNT(id) FROM boardlike
+            WHERE boardId = #{boardId}
+            """)
     int countByBoardId(Integer boardId);
 
+    @Select("""
+            SELECT * FROM boardlike
+            WHERE boardId= #{boardId}
+                     AND memberId =#{memberId}
+            """)
+    Like selectByBoardIdAndMemberId(Integer boardId, String memberId);
 }

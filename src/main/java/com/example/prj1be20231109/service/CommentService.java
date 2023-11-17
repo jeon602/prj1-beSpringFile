@@ -36,6 +36,7 @@ public class CommentService {
         return true;
     }
 
+
     public List<Comment> list(Integer boardId) {
         return mapper.selectByBoardId(boardId);
     }

@@ -26,17 +26,17 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class BoardService {
 
-    private final FileMapper fileMapper;
     private final BoardMapper mapper;
     private final CommentMapper commentMapper;
     private final LikeMapper likeMapper;
-    @Value("${aw3,s3.bucket.name}")
-    private final String bucket;
+    private final FileMapper fileMapper;
+
     private final S3Client s3;
 
+    @Value("${aw3.s3.bucket.name}")
+    private String bucket;
 
     public boolean save(Board board, MultipartFile[] files, Member login) throws IOException {
-
         //
         board.setWriter(login.getId());
 
@@ -47,15 +47,19 @@ public class BoardService {
             for (int i = 0; i < files.length; i++) {
                 // boardId, name
                 fileMapper.insert(board.getId(), files[i].getOriginalFilename());
+
                 // 실제 파일을 S3 bucket에 upload
-                //일단 local에 저장
+                // 일단 local에 저장
                 upload(board.getId(), files[i]);
             }
         }
+
+
         return cnt == 1;
     }
 
     private void upload(Integer boardId, MultipartFile file) throws IOException {
+
         String key = "prj1/" + boardId + "/" + file.getOriginalFilename();
 
         PutObjectRequest objectRequest = PutObjectRequest.builder()
@@ -63,19 +67,11 @@ public class BoardService {
                 .key(key)
                 .acl(ObjectCannedACL.PUBLIC_READ)
                 .build();
-        // 파일 저장 경로
-        // C:\Temp\prj1\게시물번호\파일명
 
-//            File folder = new File("C:\\Temp\\prj1\\" + boardId);
-//            if (!folder.exists()) {
-//                folder.mkdirs();
-//            }
-//            String path = folder.getAbsolutePath() + "\\" + file.getOriginalFilename();
-//            File des = new File(path);
-//            file.transferTo(des);
-//// 여기서는 catch 로 잡았기 때문에 exception이 발생 하지 않으니,
         s3.putObject(objectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
-        }
+
+
+    }
 
     public boolean validate(Board board) {
         if (board == null) {
@@ -86,7 +82,11 @@ public class BoardService {
             return false;
         }
 
-        return board.getTitle() != null && !board.getTitle().isBlank();
+        if (board.getTitle() == null || board.getTitle().isBlank()) {
+            return false;
+        }
+
+        return true;
     }
 
     public Map<String, Object> list(Integer page, String keyword) {

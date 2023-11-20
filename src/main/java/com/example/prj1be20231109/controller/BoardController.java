@@ -36,10 +36,13 @@ public class BoardController {
         }
     }
 // /api/board/list?p=6
+// /api/board/listk=java
+//     k가 넘어오면 keyword로 넘기면 된다
     @GetMapping("list") //리스트가 하던일은 이제 페이지 관련한 정보도 넘겨줘야 한다! --->map으로 묶어서 전달해주기
-    public Map<String, Object> list(@RequestParam(value = "p" ,defaultValue = "1") Integer page) {
+    public Map<String, Object> list(@RequestParam(value = "p" ,defaultValue = "1") Integer page,
+                                    @RequestParam(value = "k", defaultValue = "")String keyword) {
 //        보드리스트로 만들었던 게시물 리스트 key value. pageinfo ,..., key 도 만들어서 pageinfo로 만들어서 서비스에서 전달할 것.
-        return service.list(page);
+        return service.list(page,keyword);
     }
 
     @GetMapping("id/{id}")

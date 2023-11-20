@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -35,14 +34,10 @@ public class BoardService {
             return false;
         }
 
-        if (board.getTitle() == null || board.getTitle().isBlank()) {
-            return false;
-        }
-
-        return true;
+        return board.getTitle() != null && !board.getTitle().isBlank();
     }
 
-    public Map<String, Object> list(Integer page) {
+    public Map<String, Object> list(Integer page, String keyword) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> pageInfo = new HashMap<>();
 
@@ -51,21 +46,21 @@ public class BoardService {
         int startPageNumber = (page - 1) / 10 * 10 + 1;
         int endPageNumber = startPageNumber + 9;
         endPageNumber = Math.min(endPageNumber, lastPageNumber);
-        int prevPageNumber=startPageNumber - 10;
-        int nextPageNumber= endPageNumber + 1;
+        int prevPageNumber = startPageNumber - 10;
+        int nextPageNumber = endPageNumber + 1;
 
         pageInfo.put("currentPageNumber", page);
         pageInfo.put("startPageNumber", startPageNumber);
         pageInfo.put("endPageNumber", endPageNumber);
-        if (prevPageNumber > 0){
+        if (prevPageNumber > 0) {
             pageInfo.put("prevPageNumber", prevPageNumber);
         }
-        if (nextPageNumber <= lastPageNumber ){
+        if (nextPageNumber <= lastPageNumber) {
             pageInfo.put("nextPageNumber", nextPageNumber);
         }
 
         int from = (page - 1) * 10;
-        map.put("boardList", mapper.selectAll(from));
+        map.put("boardList", mapper.selectAll(from, "%" + keyword + "%"));
         map.put("pageInfo", pageInfo);
         return map;
     }

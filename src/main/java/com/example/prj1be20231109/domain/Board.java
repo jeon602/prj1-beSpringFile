@@ -2,11 +2,13 @@ package com.example.prj1be20231109.domain;
 
 import com.example.prj1be20231109.util.AppUtil;
 import lombok.Data;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Data
 public class Board {
@@ -18,10 +20,14 @@ public class Board {
     private LocalDateTime inserted;
     private Integer countComment;
     private Integer countLike;
+    private List<BoardFile> files;
+
 
     public String getAgo() {
         return AppUtil.getAgo(inserted, LocalDateTime.now());
     }
 
 
+    public void setUrl(String url) {
+    }
 }

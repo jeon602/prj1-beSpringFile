@@ -7,9 +7,14 @@ import com.example.prj1be20231109.mapper.CommentMapper;
 import com.example.prj1be20231109.mapper.FileMapper;
 import com.example.prj1be20231109.mapper.LikeMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +30,13 @@ public class BoardService {
     private final BoardMapper mapper;
     private final CommentMapper commentMapper;
     private final LikeMapper likeMapper;
+    @Value("${aw3,s3.bucket.name}")
+    private final String bucket;
+    private final S3Client s3;
 
 
     public boolean save(Board board, MultipartFile[] files, Member login) throws IOException {
+
         //
         board.setWriter(login.getId());
 
@@ -47,17 +56,25 @@ public class BoardService {
     }
 
     private void upload(Integer boardId, MultipartFile file) throws IOException {
+        String key = "prj1/" + boardId + "/" + file.getOriginalFilename();
+
+        PutObjectRequest objectRequest = PutObjectRequest.builder()
+                .bucket(bucket)
+                .key(key)
+                .acl(ObjectCannedACL.PUBLIC_READ)
+                .build();
         // 파일 저장 경로
         // C:\Temp\prj1\게시물번호\파일명
 
-            File folder = new File("C:\\Temp\\prj1\\" + boardId);
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-            String path = folder.getAbsolutePath() + "\\" + file.getOriginalFilename();
-            File des = new File(path);
-            file.transferTo(des);
-// 여기서는 catch 로 잡았기 때문에 exception이 발생 하지 않으니,
+//            File folder = new File("C:\\Temp\\prj1\\" + boardId);
+//            if (!folder.exists()) {
+//                folder.mkdirs();
+//            }
+//            String path = folder.getAbsolutePath() + "\\" + file.getOriginalFilename();
+//            File des = new File(path);
+//            file.transferTo(des);
+//// 여기서는 catch 로 잡았기 때문에 exception이 발생 하지 않으니,
+        s3.putObject(objectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
         }
 
     public boolean validate(Board board) {

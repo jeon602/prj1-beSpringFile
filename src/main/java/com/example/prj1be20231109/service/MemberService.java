@@ -8,6 +8,7 @@ import com.example.prj1be20231109.mapper.LikeMapper;
 import com.example.prj1be20231109.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
@@ -16,6 +17,8 @@ import java.util.PriorityQueue;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackFor = Exception.class)
+
 public class MemberService {
 
     private final MemberMapper mapper;

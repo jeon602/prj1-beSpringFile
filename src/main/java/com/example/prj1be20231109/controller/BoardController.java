@@ -35,7 +35,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        if (service.save(board, login)) {
+        if (service.save(board, files, login)) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.internalServerError().build();

@@ -78,8 +78,9 @@ public interface BoardMapper {
     List<Integer> selectIdListByMemberId(String writer);
 
     @Select("""
-            SELECT  COUNT(*)
-            FROM board;
+            SELECT  COUNT(*) FROM board
+            WHERE title LIKE #{keyword}
+                OR content like #{keyword}
             """)
-    int countAll();
+    int countAll(String keyword);
 }

@@ -33,7 +33,7 @@ public interface BoardMapper {
             ORDER BY b.id DESC
             LIMIT #{from},10;
             """)
-    Objects selectAll(Integer from, String keyword);
+    List<Board> selectAll(Integer from, String keyword);
 
     //메소드에 파라미터가 변경되었으니 사용화
     @Select("""

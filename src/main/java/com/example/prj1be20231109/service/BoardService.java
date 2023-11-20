@@ -34,14 +34,18 @@ public class BoardService {
             return false;
         }
 
-        return board.getTitle() != null && !board.getTitle().isBlank();
+        if (board.getTitle() == null || board.getTitle().isBlank()) {
+            return false;
+        }
+
+        return true;
     }
 
     public Map<String, Object> list(Integer page, String keyword) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> pageInfo = new HashMap<>();
 
-        int countAll = mapper.countAll("%" + keyword + "%"); // %%
+        int countAll = mapper.countAll("%" + keyword + "%");
         int lastPageNumber = (countAll - 1) / 10 + 1;
         int startPageNumber = (page - 1) / 10 * 10 + 1;
         int endPageNumber = startPageNumber + 9;
@@ -60,7 +64,7 @@ public class BoardService {
         }
 
         int from = (page - 1) * 10;
-        map.put("boardList", mapper.selectAll(from, "%" + keyword + "%"));
+        map.put("boardList", mapper.selectAll(from, "%"+ keyword + "%"));
         map.put("pageInfo", pageInfo);
         return map;
     }

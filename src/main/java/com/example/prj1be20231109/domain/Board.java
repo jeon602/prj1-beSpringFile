@@ -21,6 +21,7 @@ public class Board {
     private Integer countComment;
     private Integer countLike;
     private List<BoardFile> files;
+    private Integer countFile;
 
 
     public String getAgo() {
